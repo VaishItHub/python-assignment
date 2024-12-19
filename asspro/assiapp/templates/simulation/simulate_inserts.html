@@ -1,0 +1,162 @@
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulate Inserts</title>
+    <style>
+        .results {
+            margin-top: 20px;
+        }
+        .loading {
+            display: none;
+            font-size: 16px;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simulate Inserts</h1>
+    <button id="simulate-btn">Simulate Insertions</button>
+
+    <div id="loading" class="loading">Simulating inserts... Please wait.</div>
+
+    <div id="results" class="results">
+        <h2>Users</h2>
+        <ul id="users-list"></ul>
+        
+        <h2>Products</h2>
+        <ul id="products-list"></ul>
+
+        <h2>Orders</h2>
+        <ul id="orders-list"></ul>
+    </div>
+
+    <script>
+        document.getElementById('simulate-btn').addEventListener('click', function() {
+            // Show loading message
+            document.getElementById('loading').style.display = 'block';
+
+            // Perform AJAX request to the Django view
+            fetch('/simulate-inserts/')
+                .then(response => response.json())
+                .then(data => {
+                    // Hide loading message
+                    document.getElementById('loading').style.display = 'none';
+
+                    // Clear previous results
+                    document.getElementById('users-list').innerHTML = '';
+                    document.getElementById('products-list').innerHTML = '';
+                    document.getElementById('orders-list').innerHTML = '';
+
+                    // Display new results
+                    data.users.forEach(user => {
+                        const li = document.createElement('li');
+                        li.textContent = user;
+                        document.getElementById('users-list').appendChild(li);
+                    });
+
+                    data.products.forEach(product => {
+                        const li = document.createElement('li');
+                        li.textContent = product;
+                        document.getElementById('products-list').appendChild(li);
+                    });
+
+                    data.orders.forEach(order => {
+                        const li = document.createElement('li');
+                        li.textContent = order;
+                        document.getElementById('orders-list').appendChild(li);
+                    });
+                })
+                .catch(error => {
+                    // Hide loading message if there's an error
+                    document.getElementById('loading').style.display = 'none';
+                    alert('An error occurred: ' + error);
+                });
+        });
+    </script>
+</body>
+</html> {% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulate Inserts</title>
+    <style>
+        .results {
+            margin-top: 20px;
+        }
+        .loading {
+            display: none;
+            font-size: 16px;
+            color: blue;
+        }
+        #simulate-btn {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simulate Inserts</h1>
+    <button id="simulate-btn">Simulate Insertions</button>
+
+    <div id="loading" class="loading">Simulating inserts... Please wait.</div>
+
+    <div id="results" class="results" style="display: none;">
+        <h2>Users</h2>
+        <ul id="users-list"></ul>
+        
+        <h2>Products</h2>
+        <ul id="products-list"></ul>
+
+        <h2>Orders</h2>
+        <ul id="orders-list"></ul>
+    </div>
+
+    <script>
+        document.getElementById('simulate-btn').addEventListener('click', function() {
+            // Show loading message
+            document.getElementById('loading').style.display = 'block';
+
+            // Perform AJAX request to the Django view
+            fetch('/simulate-inserts/')
+                .then(response => response.json())
+                .then(data => {
+                    // Hide loading message
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('results').style.display = 'block'; // Show results
+
+                    // Clear previous results
+                    document.getElementById('users-list').innerHTML = '';
+                    document.getElementById('products-list').innerHTML = '';
+                    document.getElementById('orders-list').innerHTML = '';
+
+                    // Display new results
+                    data.users.forEach(user => {
+                        const li = document.createElement('li');
+                        li.textContent = user;
+                        document.getElementById('users-list').appendChild(li);
+                    });
+
+                    data.products.forEach(product => {
+                        const li = document.createElement('li');
+                        li.textContent = product;
+                        document.getElementById('products-list').appendChild(li);
+                    });
+
+                    data.orders.forEach(order => {
+                        const li = document.createElement('li');
+                        li.textContent = order;
+                        document.getElementById('orders-list').appendChild(li);
+                    });
+                })
+                .catch(error => {
+                    // Hide loading message if there's an error
+                    document.getElementById('loading').style.display = 'none';
+                    alert('An error occurred: ' + error);
+                });
+        });
+    </script>
+</body>
+</html>
